@@ -1,658 +1,674 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Payal Kaklotar – Agile Coach & Developer</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Payal Kaklotar - Agile Coach & Scrum Master</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
 <style>
-/* ── RESET & VARIABLES ── */
+/* ══════════════════════════════════════════
+   RESET & VARIABLES
+══════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg:        #0a0a0a;
-  --bg2:       #111111;
-  --bg3:       #161616;
-  --border:    #232323;
-  --text:      #e8e4de;
-  --muted:     #6b6560;
-  --accent:    #d4a853;
-  --accent2:   #8b5e2e;
-  --white:     #f5f1eb;
-  --red:       #c94040;
-
-  --font-head: 'DM Serif Display', Georgia, serif;
-  --font-ui:   'Syne', sans-serif;
-  --font-mono: 'DM Mono', monospace;
+  --bg:       #080c10;
+  --bg2:      #0d1117;
+  --bg3:      #111820;
+  --surface:  #141c26;
+  --border:   #1e2d3d;
+  --accent:   #00e5a0;
+  --accent2:  #00b8ff;
+  --accent3:  #7c3aed;
+  --text:     #e8edf2;
+  --muted:    #7a8fa6;
+  --dim:      #3d5166;
+  --font:     'Sora', sans-serif;
+  --mono:     'Space Mono', monospace;
 }
 
 html { scroll-behavior: smooth; }
 
 body {
-  font-family: var(--font-ui);
+  font-family: var(--font);
   background: var(--bg);
   color: var(--text);
   overflow-x: hidden;
   cursor: none;
 }
 
-/* ── CUSTOM CURSOR ── */
+/* ══════════════════════════════════════════
+   CUSTOM CURSOR
+══════════════════════════════════════════ */
 .cursor {
+  position: fixed;
   width: 10px; height: 10px;
   background: var(--accent);
   border-radius: 50%;
-  position: fixed; top: 0; left: 0;
-  pointer-events: none; z-index: 9999;
+  pointer-events: none;
+  z-index: 9999;
   transform: translate(-50%, -50%);
-  transition: transform 0.1s, width 0.2s, height 0.2s, background 0.2s;
+  transition: transform 0.1s, width 0.3s, height 0.3s, opacity 0.3s;
   mix-blend-mode: screen;
 }
 .cursor-ring {
+  position: fixed;
   width: 36px; height: 36px;
-  border: 1px solid rgba(212,168,83,0.4);
+  border: 1.5px solid var(--accent);
   border-radius: 50%;
-  position: fixed; top: 0; left: 0;
-  pointer-events: none; z-index: 9998;
+  pointer-events: none;
+  z-index: 9998;
   transform: translate(-50%, -50%);
-  transition: transform 0.18s ease-out, width 0.25s, height 0.25s, border-color 0.2s;
+  transition: transform 0.12s ease-out, width 0.3s, height 0.3s, opacity 0.3s, border-color 0.3s;
+  opacity: 0.5;
 }
-.cursor.hovered { width: 16px; height: 16px; }
-.cursor-ring.hovered { width: 52px; height: 52px; border-color: var(--accent); }
+.cursor.hovered { width: 6px; height: 6px; }
+.cursor-ring.hovered { width: 56px; height: 56px; opacity: 0.25; border-color: var(--accent2); }
 
-/* ── NOISE OVERLAY ── */
-body::before {
+/* ══════════════════════════════════════════
+   GRID BACKGROUND
+══════════════════════════════════════════ */
+.grid-bg {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0,229,160,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,160,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+.grid-bg::after {
   content: '';
-  position: fixed; inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-  pointer-events: none; z-index: 0; opacity: 0.4;
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(0,229,160,0.06) 0%, transparent 60%);
 }
 
-/* ── NAV ── */
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
 nav {
-  position: fixed; top: 0; left: 0; right: 0;
+  position: fixed;
+  top: 0; left: 0; right: 0;
   z-index: 100;
-  display: flex; justify-content: space-between; align-items: center;
-  padding: 22px 52px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 22px 60px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid transparent;
-  transition: border-color 0.3s, background 0.3s, backdrop-filter 0.3s;
+  transition: border-color 0.3s, background 0.3s;
 }
 nav.scrolled {
+  background: rgba(8,12,16,0.85);
   border-color: var(--border);
-  background: rgba(10,10,10,0.85);
-  backdrop-filter: blur(16px);
 }
 .nav-logo {
-  font-family: var(--font-head);
-  font-size: 22px; color: var(--white);
+  font-family: var(--mono);
+  font-size: 14px;
+  color: var(--accent);
   letter-spacing: 0.5px;
+  text-decoration: none;
 }
-.nav-logo span { color: var(--accent); }
-.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-logo span { color: var(--muted); }
+.nav-links {
+  display: flex;
+  gap: 36px;
+  list-style: none;
+}
 .nav-links a {
-  font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--muted); text-decoration: none;
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 0.5px;
   transition: color 0.2s;
+  position: relative;
 }
-.nav-links a:hover { color: var(--accent); }
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -3px; left: 0;
+  width: 0; height: 1px;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+.nav-links a:hover { color: var(--text); }
+.nav-links a:hover::after { width: 100%; }
 .nav-cta {
-  font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--accent); border: 1px solid var(--accent);
-  padding: 8px 20px; text-decoration: none;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  border: 1px solid var(--accent);
+  padding: 8px 18px;
+  border-radius: 4px;
+  text-decoration: none;
   transition: background 0.2s, color 0.2s;
+  letter-spacing: 0.5px;
 }
 .nav-cta:hover { background: var(--accent); color: var(--bg); }
 
-/* ── HERO ── */
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
 #hero {
-  min-height: 100vh;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
   position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 60px;
+  z-index: 1;
   overflow: hidden;
-}
-.hero-left {
-  display: flex; flex-direction: column; justify-content: flex-end;
-  padding: 0 52px 80px;
-  position: relative; z-index: 2;
 }
 .hero-eyebrow {
-  font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 24px;
-  display: flex; align-items: center; gap: 12px;
-}
-.hero-eyebrow::before {
-  content: ''; display: block;
-  width: 40px; height: 1px; background: var(--accent);
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.2s forwards;
 }
 .hero-name {
-  font-family: var(--font-head);
-  font-size: clamp(56px, 6vw, 88px);
-  line-height: 1.0;
-  color: var(--white);
-  margin-bottom: 8px;
+  font-size: clamp(52px, 8vw, 108px);
+  font-weight: 700;
+  line-height: 0.95;
+  letter-spacing: -3px;
+  color: var(--text);
+  opacity: 0;
+  animation: fadeUp 0.8s 0.4s forwards;
 }
-.hero-name em {
-  font-style: italic; color: var(--accent);
+.hero-name .accent-line {
   display: block;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 .hero-tagline {
-  font-family: var(--font-mono);
-  font-size: 13px; color: var(--muted);
-  letter-spacing: 0.5px; line-height: 1.7;
-  margin: 28px 0 44px;
-  max-width: 380px;
-  border-left: 2px solid var(--border);
-  padding-left: 20px;
+  margin-top: 28px;
+  font-size: 16px;
+  color: var(--muted);
+  max-width: 520px;
+  line-height: 1.65;
+  font-weight: 300;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.6s forwards;
 }
-.hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+.hero-tagline strong { color: var(--text); font-weight: 500; }
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 44px;
+  opacity: 0;
+  animation: fadeUp 0.8s 0.8s forwards;
+}
 .btn-primary {
-  background: var(--accent); color: var(--bg);
-  padding: 14px 32px; font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-  text-decoration: none; font-weight: 500;
-  transition: background 0.2s, transform 0.15s;
-  display: inline-block;
-}
-.btn-primary:hover { background: #e8b960; transform: translateY(-2px); }
-.btn-ghost {
-  border: 1px solid var(--border); color: var(--text);
-  padding: 14px 32px; font-family: var(--font-mono);
-  font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+  background: var(--accent);
+  color: var(--bg);
+  padding: 14px 30px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
   text-decoration: none;
+  letter-spacing: 0.3px;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 0 30px rgba(0,229,160,0.2);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(0,229,160,0.35); }
+.btn-ghost {
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 14px 30px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  letter-spacing: 0.3px;
   transition: border-color 0.2s, color 0.2s;
-  display: inline-block;
 }
-.btn-ghost:hover { border-color: var(--text); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
 
-.hero-right {
-  position: relative;
-  display: flex; align-items: flex-end;
-  padding-bottom: 80px;
-}
-.hero-grid-visual {
-  position: absolute; inset: 0;
-  background-image:
-    linear-gradient(var(--border) 1px, transparent 1px),
-    linear-gradient(90deg, var(--border) 1px, transparent 1px);
-  background-size: 60px 60px;
-  opacity: 0.4;
-}
-.hero-grid-visual::after {
-  content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 60% 50%, rgba(212,168,83,0.07) 0%, transparent 65%);
-}
-.hero-stat-block {
-  position: relative; z-index: 2;
-  padding: 0 52px;
-  display: flex; flex-direction: column; gap: 28px;
-  width: 100%;
-}
-.hero-stat {
-  border-left: 2px solid var(--accent);
-  padding-left: 20px;
-}
-.hero-stat .num {
-  font-family: var(--font-head);
-  font-size: 48px; color: var(--white); line-height: 1;
-}
-.hero-stat .num span { color: var(--accent); }
-.hero-stat .label {
-  font-family: var(--font-mono);
-  font-size: 11px; color: var(--muted);
-  letter-spacing: 1px; text-transform: uppercase;
-  margin-top: 4px;
-}
-.hero-cert-badge {
-  position: absolute; top: 62px; right: 52px;
-  border: 1px solid var(--accent);
-  padding: 12px 18px;
-  font-family: var(--font-mono); font-size: 10px;
-  letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--accent);
-  animation: pulse-border 3s ease infinite;
-}
-@keyframes pulse-border {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(212,168,83,0); }
-  50% { box-shadow: 0 0 0 8px rgba(212,168,83,0.08); }
-}
-
-.hero-scroll-hint {
-  position: absolute; bottom: 32px; left: 50%;
-  transform: translateX(-50%);
-  display: flex; flex-direction: column; align-items: center; gap: 8px;
-  font-family: var(--font-mono); font-size: 10px;
-  letter-spacing: 2px; text-transform: uppercase; color: var(--muted);
-  animation: float 2.5s ease-in-out infinite;
-}
-.hero-scroll-hint::after {
-  content: ''; display: block;
-  width: 1px; height: 40px;
-  background: linear-gradient(to bottom, var(--muted), transparent);
-}
-@keyframes float {
-  0%, 100% { transform: translateX(-50%) translateY(0); }
-  50% { transform: translateX(-50%) translateY(6px); }
-}
-
-/* ── FADE IN ON LOAD ── */
-.fade-in { opacity: 0; transform: translateY(30px); animation: fadeUp 0.7s ease forwards; }
-.fade-in:nth-child(1) { animation-delay: 0.2s; }
-.fade-in:nth-child(2) { animation-delay: 0.35s; }
-.fade-in:nth-child(3) { animation-delay: 0.5s; }
-.fade-in:nth-child(4) { animation-delay: 0.65s; }
-@keyframes fadeUp {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* ── SECTION BASE ── */
-section { position: relative; z-index: 1; }
-.section-label {
-  font-family: var(--font-mono);
-  font-size: 10px; letter-spacing: 3px; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 12px;
-  display: flex; align-items: center; gap: 10px;
-}
-.section-label::after {
-  content: ''; display: block;
-  flex: 1; height: 1px; background: var(--border);
-}
-.section-title {
-  font-family: var(--font-head);
-  font-size: clamp(36px, 4vw, 54px);
-  color: var(--white); line-height: 1.1;
-  margin-bottom: 16px;
-}
-.section-sub {
-  font-family: var(--font-mono);
-  font-size: 13px; color: var(--muted);
-  max-width: 520px; line-height: 1.7;
-}
-
-/* ── ABOUT ── */
-#about {
-  padding: 120px 52px;
-  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-  align-items: center;
+.hero-stats {
+  display: flex;
+  gap: 48px;
+  margin-top: 72px;
+  opacity: 0;
+  animation: fadeUp 0.8s 1s forwards;
+  padding-top: 40px;
   border-top: 1px solid var(--border);
 }
-.about-left {}
-.about-body {
-  font-family: var(--font-ui);
-  font-size: 15px; color: #b0a99e;
-  line-height: 1.85; margin-top: 28px;
+.stat-item .stat-num {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -1px;
+  line-height: 1;
 }
-.about-body strong { color: var(--white); font-weight: 600; }
-.about-right {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
-}
-.about-card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  padding: 28px 24px;
-  transition: border-color 0.2s, background 0.2s;
-  position: relative;
-  overflow: hidden;
-}
-.about-card:hover { border-color: var(--accent); background: var(--bg3); }
-.about-card::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0;
-  height: 2px; background: var(--accent);
-  transform: scaleX(0); transform-origin: left;
-  transition: transform 0.3s ease;
-}
-.about-card:hover::before { transform: scaleX(1); }
-.about-card .icon {
-  font-size: 22px; margin-bottom: 14px;
-  display: block;
-}
-.about-card h4 {
-  font-family: var(--font-ui); font-size: 13px; font-weight: 700;
-  color: var(--white); margin-bottom: 6px;
+.stat-item .stat-num span { color: var(--accent); }
+.stat-item .stat-label {
+  font-size: 11.5px;
+  color: var(--muted);
+  margin-top: 4px;
+  font-weight: 400;
   letter-spacing: 0.3px;
 }
-.about-card p {
-  font-family: var(--font-mono); font-size: 11px;
-  color: var(--muted); line-height: 1.6;
+
+/* Floating orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  opacity: 0.12;
+}
+.orb1 { width: 500px; height: 500px; background: var(--accent); top: -100px; right: -100px; animation: drift 12s ease-in-out infinite alternate; }
+.orb2 { width: 350px; height: 350px; background: var(--accent2); bottom: 0; right: 200px; animation: drift 15s ease-in-out infinite alternate-reverse; opacity: 0.07; }
+.orb3 { width: 250px; height: 250px; background: var(--accent3); top: 30%; left: -50px; animation: drift 18s ease-in-out infinite alternate; opacity: 0.08; }
+
+/* Scroll indicator */
+.scroll-hint {
+  position: absolute;
+  bottom: 36px;
+  right: 60px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0;
+  animation: fadeUp 0.8s 1.4s forwards;
+}
+.scroll-line {
+  width: 40px;
+  height: 1px;
+  background: var(--dim);
+  animation: scrollPulse 2s ease-in-out infinite;
 }
 
-/* ── EXPERIENCE ── */
-#experience {
-  padding: 100px 52px;
-  border-top: 1px solid var(--border);
+/* ══════════════════════════════════════════
+   SECTION COMMON
+══════════════════════════════════════════ */
+section {
+  position: relative;
+  z-index: 1;
+  padding: 100px 60px;
 }
-.exp-header { max-width: 600px; margin-bottom: 64px; }
+.sec-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.sec-heading {
+  font-size: clamp(32px, 4vw, 52px);
+  font-weight: 700;
+  letter-spacing: -1.5px;
+  line-height: 1.05;
+  color: var(--text);
+  margin-bottom: 60px;
+}
+.sec-heading .dim { color: var(--dim); }
+
+/* ══════════════════════════════════════════
+   ABOUT
+══════════════════════════════════════════ */
+#about {
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.about-text p {
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.75;
+  margin-bottom: 18px;
+  font-weight: 300;
+}
+.about-text p strong { color: var(--text); font-weight: 500; }
+.about-text p .hl { color: var(--accent); font-weight: 500; }
+.about-skills-col { display: flex; flex-direction: column; gap: 20px; }
+.skill-category { }
+.skill-cat-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--dim);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.skill-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.pill {
+  font-size: 11.5px;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  padding: 5px 12px;
+  border-radius: 100px;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+  font-weight: 400;
+}
+.pill:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,160,0.05); }
+.pill.core { border-color: rgba(0,229,160,0.3); color: var(--accent); background: rgba(0,229,160,0.06); }
+
+/* ══════════════════════════════════════════
+   EXPERIENCE
+══════════════════════════════════════════ */
+#experience { background: var(--bg); }
 .exp-timeline { position: relative; }
 .exp-timeline::before {
-  content: ''; position: absolute;
-  left: 0; top: 0; bottom: 0;
-  width: 1px; background: var(--border);
+  content: '';
+  position: absolute;
+  left: 0; top: 8px; bottom: 8px;
+  width: 1px;
+  background: var(--border);
 }
 .exp-item {
-  display: grid; grid-template-columns: 260px 1fr;
-  gap: 40px; padding: 40px 0 40px 32px;
-  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 0 50px;
+  padding: 0 0 52px 0;
   position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s, transform 0.6s;
 }
+.exp-item.visible { opacity: 1; transform: translateY(0); }
 .exp-item::before {
-  content: ''; position: absolute;
-  left: -4px; top: 48px;
+  content: '';
+  position: absolute;
+  left: -4px; top: 8px;
   width: 9px; height: 9px;
-  border-radius: 50%; background: var(--border);
-  border: 2px solid var(--bg);
-  transition: background 0.2s, border-color 0.2s;
+  background: var(--bg3);
+  border: 1.5px solid var(--accent);
+  border-radius: 50%;
 }
-.exp-item:hover::before { background: var(--accent); border-color: var(--accent); }
-.exp-meta {}
-.exp-dates {
-  font-family: var(--font-mono); font-size: 11px;
-  color: var(--accent); letter-spacing: 1px;
-  text-transform: uppercase; margin-bottom: 8px;
+.exp-meta { padding-left: 28px; }
+.exp-period {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--dim);
+  letter-spacing: 1px;
+  margin-bottom: 6px;
 }
 .exp-company {
-  font-family: var(--font-head); font-size: 22px;
-  color: var(--white); margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
 }
-.exp-location {
-  font-family: var(--font-mono); font-size: 11px;
-  color: var(--muted);
+.exp-loc {
+  font-size: 11.5px;
+  color: var(--dim);
 }
-.exp-content {}
+.exp-content { padding-left: 0; }
 .exp-role {
-  font-family: var(--font-ui); font-size: 15px; font-weight: 700;
-  color: var(--white); margin-bottom: 16px;
-  letter-spacing: 0.3px;
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.5px;
+  margin-bottom: 16px;
 }
-.exp-desc {
-  font-family: var(--font-ui); font-size: 13.5px;
-  color: #9a9088; line-height: 1.75;
-  margin-bottom: 20px;
+.exp-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+.exp-bullets li {
+  font-size: 13.5px;
+  color: var(--muted);
+  line-height: 1.6;
+  padding-left: 18px;
+  position: relative;
+  font-weight: 300;
 }
-.exp-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-.exp-tag {
-  font-family: var(--font-mono); font-size: 10px;
-  letter-spacing: 1px; text-transform: uppercase;
-  color: var(--muted); border: 1px solid var(--border);
-  padding: 4px 10px;
-  transition: color 0.2s, border-color 0.2s;
+.exp-bullets li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 11px;
+  top: 2px;
 }
-.exp-item:hover .exp-tag { color: var(--accent); border-color: rgba(212,168,83,0.3); }
-.exp-highlight {
-  display: flex; gap: 24px; flex-wrap: wrap; margin-bottom: 20px;
+.exp-bullets li strong { color: var(--text); font-weight: 500; }
+.exp-bullets li .metric { color: var(--accent); font-weight: 600; font-family: var(--mono); font-size: 12.5px; }
+.exp-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 18px;
 }
-.exp-highlight-item {
-  font-family: var(--font-mono); font-size: 11px;
-  color: var(--accent); letter-spacing: 0.5px;
+.tag {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  color: var(--dim);
+  border: 1px solid var(--border);
+  padding: 3px 9px;
+  border-radius: 3px;
+  background: var(--surface);
 }
-.exp-highlight-item::before { content: '↑ '; }
 
-/* ── SKILLS ── */
-#skills {
-  padding: 100px 52px;
-  border-top: 1px solid var(--border);
-  background: var(--bg2);
-}
-.skills-header { max-width: 600px; margin-bottom: 64px; }
-.skills-layout {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
-}
-.skill-group {
-  background: var(--bg); border: 1px solid var(--border);
-  padding: 36px 30px;
-  transition: border-color 0.2s;
-  position: relative; overflow: hidden;
-}
-.skill-group:hover { border-color: rgba(212,168,83,0.4); }
-.skill-group-bg {
-  position: absolute; right: -20px; bottom: -20px;
-  font-family: var(--font-head); font-size: 90px;
-  color: rgba(255,255,255,0.018); line-height: 1;
-  pointer-events: none; user-select: none;
-}
-.skill-group-title {
-  font-family: var(--font-mono); font-size: 10px;
-  letter-spacing: 2.5px; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 22px;
-  padding-bottom: 12px; border-bottom: 1px solid var(--border);
-}
-.skill-list { display: flex; flex-direction: column; gap: 10px; }
-.skill-row { display: flex; align-items: center; gap: 10px; }
-.skill-name {
-  font-family: var(--font-ui); font-size: 13px;
-  color: var(--text); flex: 1;
-}
-.skill-bar-wrap {
-  width: 80px; height: 2px;
-  background: var(--border); border-radius: 2px;
-  overflow: hidden;
-}
-.skill-bar {
-  height: 100%; background: var(--accent);
-  border-radius: 2px;
-  transform-origin: left;
-  transform: scaleX(0);
-  transition: transform 1s ease 0.3s;
-}
-.skill-group.visible .skill-bar { transform: scaleX(1); }
-
-/* ── PROJECTS ── */
+/* ══════════════════════════════════════════
+   PROJECTS  (Highlights)
+══════════════════════════════════════════ */
 #projects {
-  padding: 100px 52px;
+  background: var(--bg2);
   border-top: 1px solid var(--border);
 }
-.projects-header { max-width: 600px; margin-bottom: 64px; }
 .projects-grid {
-  display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
 }
 .proj-card {
-  background: var(--bg2); border: 1px solid var(--border);
-  padding: 40px 36px;
-  position: relative; overflow: hidden;
-  transition: border-color 0.25s;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 28px;
+  position: relative;
+  overflow: hidden;
+  cursor: default;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s, transform 0.5s, border-color 0.3s, box-shadow 0.3s;
 }
-.proj-card:hover { border-color: rgba(212,168,83,0.4); }
-.proj-card::after {
+.proj-card.visible { opacity: 1; transform: translateY(0); }
+.proj-card::before {
   content: '';
-  position: absolute; inset: 0;
-  background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(212,168,83,0.06) 0%, transparent 60%);
-  opacity: 0; transition: opacity 0.3s;
-  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at var(--mx,50%) var(--my,50%), rgba(0,229,160,0.06) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.3s;
 }
-.proj-card:hover::after { opacity: 1; }
-.proj-num {
-  font-family: var(--font-head); font-size: 64px;
-  color: var(--border); line-height: 1;
-  position: absolute; right: 30px; top: 20px;
-  transition: color 0.3s;
+.proj-card:hover { border-color: rgba(0,229,160,0.35); box-shadow: 0 0 30px rgba(0,229,160,0.07); }
+.proj-card:hover::before { opacity: 1; }
+.proj-domain {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 12px;
 }
-.proj-card:hover .proj-num { color: rgba(212,168,83,0.12); }
-.proj-category {
-  font-family: var(--font-mono); font-size: 10px;
-  letter-spacing: 2px; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 16px;
-}
-.proj-name {
-  font-family: var(--font-head); font-size: 26px;
-  color: var(--white); margin-bottom: 14px; line-height: 1.2;
+.proj-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  margin-bottom: 12px;
+  line-height: 1.3;
 }
 .proj-desc {
-  font-family: var(--font-ui); font-size: 13.5px;
-  color: var(--muted); line-height: 1.7; margin-bottom: 24px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.65;
+  font-weight: 300;
+  margin-bottom: 20px;
 }
-.proj-tech { display: flex; flex-wrap: wrap; gap: 8px; }
-.proj-tech span {
-  font-family: var(--font-mono); font-size: 10px;
-  letter-spacing: 1px; text-transform: uppercase;
-  color: var(--muted); border: 1px solid var(--border);
+.proj-desc strong { color: var(--text); font-weight: 500; }
+.proj-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.proj-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--dim);
+  border: 1px solid var(--border);
   padding: 3px 9px;
+  border-radius: 3px;
+  background: var(--bg3);
 }
+.proj-card.featured {
+  grid-column: span 2;
+  background: linear-gradient(135deg, var(--surface) 0%, #0f1e2e 100%);
+}
+.proj-card.featured .proj-title { font-size: 20px; }
+.proj-card.featured .proj-desc { font-size: 13.5px; }
 
-/* ── CERTIFICATIONS ── */
+/* ══════════════════════════════════════════
+   CERTIFICATIONS
+══════════════════════════════════════════ */
 #certifications {
-  padding: 100px 52px;
+  background: var(--bg);
   border-top: 1px solid var(--border);
-  background: var(--bg2);
 }
-.certs-header { max-width: 600px; margin-bottom: 64px; }
 .certs-grid {
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
 }
 .cert-card {
-  background: var(--bg); border: 1px solid var(--border);
-  padding: 28px 26px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 22px 20px;
   transition: border-color 0.2s, transform 0.2s;
 }
 .cert-card:hover {
-  border-color: rgba(212,168,83,0.4);
-  transform: translateY(-3px);
+  border-color: rgba(0,229,160,0.35);
+  transform: translateY(-2px);
 }
 .cert-issuer {
-  font-family: var(--font-mono); font-size: 10px;
-  letter-spacing: 2px; text-transform: uppercase;
-  color: var(--accent); margin-bottom: 10px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
 }
 .cert-name {
-  font-family: var(--font-ui); font-size: 14px; font-weight: 700;
-  color: var(--white); line-height: 1.4;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
 }
 
-/* ── EDUCATION ── */
-#education {
-  padding: 100px 52px;
-  border-top: 1px solid var(--border);
-  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
-  align-items: start;
-}
-.edu-list { display: flex; flex-direction: column; gap: 2px; margin-top: 40px; }
-.edu-item {
-  background: var(--bg2); border: 1px solid var(--border);
-  padding: 28px 26px;
-  display: flex; gap: 20px; align-items: flex-start;
-  transition: border-color 0.2s;
-}
-.edu-item:hover { border-color: rgba(212,168,83,0.3); }
-.edu-year {
-  font-family: var(--font-mono); font-size: 11px;
-  color: var(--accent); white-space: nowrap; margin-top: 2px;
-}
-.edu-degree {
-  font-family: var(--font-ui); font-size: 14px; font-weight: 700;
-  color: var(--white); margin-bottom: 4px;
-}
-.edu-uni {
-  font-family: var(--font-mono); font-size: 11px;
-  color: var(--muted); line-height: 1.5;
-}
-.lang-section { margin-top: 40px; }
-.lang-title {
-  font-family: var(--font-head); font-size: 36px;
-  color: var(--white); margin-bottom: 28px;
-}
-.lang-list { display: flex; flex-direction: column; gap: 12px; }
-.lang-item {
-  display: flex; justify-content: space-between; align-items: center;
-  padding-bottom: 12px; border-bottom: 1px solid var(--border);
-}
-.lang-name {
-  font-family: var(--font-ui); font-size: 14px;
-  color: var(--text); font-weight: 600;
-}
-.lang-level {
-  font-family: var(--font-mono); font-size: 10px;
-  letter-spacing: 2px; text-transform: uppercase;
-  color: var(--accent);
-}
-
-/* ── CONTACT ── */
+/* ══════════════════════════════════════════
+   CONTACT
+══════════════════════════════════════════ */
 #contact {
-  padding: 120px 52px;
+  background: var(--bg2);
   border-top: 1px solid var(--border);
   text-align: center;
-  background: var(--bg);
-  position: relative; overflow: hidden;
 }
-#contact::before {
-  content: '';
-  position: absolute;
-  top: 50%; left: 50%;
-  width: 600px; height: 600px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(212,168,83,0.06) 0%, transparent 70%);
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-}
-.contact-tagline {
-  font-family: var(--font-head); font-style: italic;
-  font-size: clamp(32px, 4vw, 54px);
-  color: var(--white); margin-bottom: 20px; line-height: 1.2;
-}
+.contact-inner { max-width: 640px; margin: 0 auto; }
+.contact-inner .sec-heading { margin-bottom: 18px; }
 .contact-sub {
-  font-family: var(--font-mono); font-size: 13px;
-  color: var(--muted); margin-bottom: 52px;
+  font-size: 15px;
+  color: var(--muted);
+  line-height: 1.7;
+  font-weight: 300;
+  margin-bottom: 44px;
 }
 .contact-links {
-  display: flex; justify-content: center; gap: 16px; flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
   margin-bottom: 60px;
 }
 .contact-link {
-  font-family: var(--font-mono); font-size: 11px;
-  letter-spacing: 1.5px; text-transform: uppercase;
-  color: var(--text); text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
   border: 1px solid var(--border);
-  padding: 12px 28px;
+  border-radius: 8px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 500;
   transition: border-color 0.2s, color 0.2s, background 0.2s;
-  display: flex; align-items: center; gap: 10px;
+  background: var(--surface);
 }
-.contact-link:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-}
-.contact-email {
-  font-family: var(--font-head); font-size: 22px;
-  color: var(--muted); transition: color 0.2s;
-}
-.contact-email:hover { color: var(--accent); }
-.contact-email a { color: inherit; text-decoration: none; }
+.contact-link:hover { border-color: var(--accent); color: var(--accent); background: rgba(0,229,160,0.05); }
+.contact-link svg { width: 16px; height: 16px; }
 
-/* ── FOOTER ── */
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
 footer {
+  position: relative;
+  z-index: 1;
   border-top: 1px solid var(--border);
-  padding: 24px 52px;
-  display: flex; justify-content: space-between; align-items: center;
-  font-family: var(--font-mono); font-size: 11px; color: var(--muted);
+  padding: 28px 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--dim);
 }
-footer a { color: var(--muted); text-decoration: none; }
-footer a:hover { color: var(--accent); }
 
-/* ── SCROLL REVEAL ── */
-.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
+/* ══════════════════════════════════════════
+   ANIMATIONS
+══════════════════════════════════════════ */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes drift {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(30px, 20px) scale(1.08); }
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleX(1); }
+  50%       { opacity: 1;   transform: scaleX(1.3); transform-origin: left; }
+}
 
-/* ── RESPONSIVE ── */
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
 @media (max-width: 900px) {
   nav { padding: 18px 24px; }
   .nav-links { display: none; }
-  #hero { grid-template-columns: 1fr; }
-  .hero-left { padding: 120px 24px 60px; justify-content: flex-start; padding-top: 140px; }
-  .hero-right { display: none; }
-  #about { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
-  .about-right { grid-template-columns: 1fr 1fr; }
-  #experience { padding: 80px 24px; }
-  .exp-item { grid-template-columns: 1fr; gap: 12px; padding-left: 24px; }
-  #skills { padding: 80px 24px; }
-  .skills-layout { grid-template-columns: 1fr; }
-  #projects { padding: 80px 24px; }
+  #hero { padding: 0 24px; }
+  section { padding: 70px 24px; }
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .exp-item { grid-template-columns: 1fr; gap: 10px; }
+  .exp-timeline::before { display: none; }
+  .exp-item::before { display: none; }
+  .exp-meta { padding-left: 0; }
   .projects-grid { grid-template-columns: 1fr; }
-  #certifications { padding: 80px 24px; }
+  .proj-card.featured { grid-column: span 1; }
   .certs-grid { grid-template-columns: 1fr 1fr; }
-  #education { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
-  #contact { padding: 80px 24px; }
+  .hero-stats { gap: 28px; flex-wrap: wrap; }
   footer { padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
+  .scroll-hint { display: none; }
 }
 </style>
 </head>
@@ -662,212 +678,261 @@ footer a:hover { color: var(--accent); }
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
-<!-- NAV -->
+<!-- GRID BG -->
+<div class="grid-bg"></div>
+
+<!-- ══════════════ NAV ══════════════ -->
 <nav id="nav">
-  <div class="nav-logo">Payal <span>K.</span></div>
+  <a href="#hero" class="nav-logo">PK<span>.dev</span></a>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
-    <li><a href="#skills">Skills</a></li>
-    <li><a href="#projects">Projects</a></li>
+    <li><a href="#projects">Highlights</a></li>
     <li><a href="#certifications">Certs</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
-  <a href="mailto:payalkaklotar006@gmail.com" class="nav-cta">Hire Me</a>
+  <a href="mailto:payalkaklotar006@gmail.com" class="nav-cta">Let's Talk →</a>
 </nav>
 
-<!-- HERO -->
+<!-- ══════════════ HERO ══════════════ -->
 <section id="hero">
-  <div class="hero-left">
-    <div class="hero-eyebrow fade-in">Berlin, Germany</div>
-    <h1 class="hero-name fade-in">
-      Payal<br>
-      <em>Kaklotar</em>
-    </h1>
-    <p class="hero-tagline fade-in">
-      Agile Coach &amp; Scrum Master driving high-impact software delivery — bridging technical teams and business strategy through SAFe, Scrum, and full-stack expertise.
-    </p>
-    <div class="hero-btns fade-in">
-      <a href="#experience" class="btn-primary">View My Work</a>
-      <a href="#contact" class="btn-ghost">Get in Touch</a>
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <div style="margin-top: 50px;"></div>
+  <div class="hero-eyebrow">PSM I Certified · Agile Coach & Scrum Master · Berlin</div>
+
+  <h1 class="hero-name">
+    Payal<br>
+    <span class="accent-line">Kaklotar</span>
+  </h1>
+
+  <p class="hero-tagline">
+    I drive <strong>Agile transformation</strong> - coaching cross-functional teams, leading SAFe delivery, and bridging business strategy with technical execution. <strong>3+ years</strong> of measurable impact across automotive, IT, and microfluidics.
+  </p>
+
+  <div class="hero-actions">
+    <a href="#experience" class="btn-primary">View Experience</a>
+    <a href="#contact" class="btn-ghost">Get in Touch</a>
+  </div>
+
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-num">3<span>+</span></div>
+      <div class="stat-label">Years Agile Experience</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">90<span>%+</span></div>
+      <div class="stat-label">Sprint Goal Achievement</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">50<span>%</span></div>
+      <div class="stat-label">Team Productivity Gains</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-num">9<span>+</span></div>
+      <div class="stat-label">Certifications</div>
     </div>
   </div>
-  <div class="hero-right">
-    <div class="hero-grid-visual"></div>
-    <div class="hero-cert-badge">PSM I Certified</div>
-    <div class="hero-stat-block">
-      <div class="hero-stat">
-        <div class="num">3<span>+</span></div>
-        <div class="label">Years Agile Experience</div>
-      </div>
-      <div class="hero-stat">
-        <div class="num">90<span>%+</span></div>
-        <div class="label">Sprint Goal Achievement</div>
-      </div>
-      <div class="hero-stat">
-        <div class="num">50<span>%</span></div>
-        <div class="label">Team Productivity Gains</div>
-      </div>
-    </div>
+
+  <div class="scroll-hint">
+    <div class="scroll-line"></div>
+    Scroll
   </div>
-  <div class="hero-scroll-hint">Scroll</div>
 </section>
 
-<!-- ABOUT -->
+<!-- ══════════════ ABOUT ══════════════ -->
 <section id="about">
-  <div class="about-left reveal">
-    <div class="section-label">About</div>
-    <h2 class="section-title">Agile at heart.<br>Technical by nature.</h2>
-    <p class="about-body">
-      I'm a <strong>PSM I Certified Scrum Master &amp; Agile Coach</strong> currently at CARIAD (Volkswagen Group) in Berlin, leading Agile transformation across cross-functional teams in a SAFe environment.
-      <br><br>
-      My background is rare: I combine hands-on <strong>full-stack development experience</strong> (React, Node.js, Python, Docker) with proven Agile leadership — meaning I don't just facilitate sprints, I understand the technical reality of what teams are building.
-      <br><br>
-      From coaching dev teams in Berlin startups to driving SAFe adoption inside a global automotive tech organization, I turn Agile principles into measurable outcomes.
-    </p>
-  </div>
-  <div class="about-right reveal">
-    <div class="about-card">
-      <span class="icon">🎯</span>
-      <h4>Scrum Master</h4>
-      <p>Facilitating all ceremonies with precision. 90%+ sprint goal achievement across teams.</p>
+  <div class="sec-label">// about me</div>
+  <h2 class="sec-heading">Agile by craft,<br><span class="dim">technical by nature.</span></h2>
+
+  <div class="about-grid">
+    <div class="about-text">
+      <p>
+        I'm a <strong>PSM I Certified Scrum Master & Agile Coach</strong> currently at CARIAD (Volkswagen Group) in Berlin, driving Agile transformation across cross-functional teams in a SAFe environment. I work at both team and ART level - from daily ceremonies to PI Planning and LACE contributions.
+      </p>
+      <p>
+        My background is rare: I combine hands-on <span class="hl">full-stack development experience</span> (React, Node.js, Python, Docker) with deep Agile leadership - which means I coach with technical credibility, not just process theory.
+      </p>
+      <p>
+        When I'm not facilitating retrospectives or removing blockers, I'm exploring new Agile scaling frameworks, contributing to SEO strategy with data tools, or sharpening my dev skills in React and Python.
+      </p>
     </div>
-    <div class="about-card">
-      <span class="icon">🚀</span>
-      <h4>Agile Coach</h4>
-      <p>Driving SAFe adoption, LACE participation, and PI Planning at ART level.</p>
-    </div>
-    <div class="about-card">
-      <span class="icon">💻</span>
-      <h4>Full Stack Dev</h4>
-      <p>React, Node.js, Python, Docker — real technical credibility behind Agile coaching.</p>
-    </div>
-    <div class="about-card">
-      <span class="icon">📊</span>
-      <h4>Data-Driven</h4>
-      <p>Agile metrics, flow analytics, velocity trends — improvement backed by numbers.</p>
+
+    <div class="about-skills-col">
+      <div class="skill-category">
+        <div class="skill-cat-label">Agile & Frameworks</div>
+        <div class="skill-pills">
+          <span class="pill core">Scrum</span>
+          <span class="pill core">SAFe 6.0</span>
+          <span class="pill core">Kanban</span>
+          <span class="pill core">PI Planning</span>
+          <span class="pill core">Agile Coaching</span>
+          <span class="pill">Scrum of Scrums</span>
+          <span class="pill">Inspect & Adapt</span>
+          <span class="pill">LACE</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-label">Tools & Platforms</div>
+        <div class="skill-pills">
+          <span class="pill core">Jira</span>
+          <span class="pill core">Confluence</span>
+          <span class="pill core">Miro</span>
+          <span class="pill">Monday.com</span>
+          <span class="pill">MS Dynamics 365</span>
+          <span class="pill">Asana</span>
+          <span class="pill">Trello</span>
+          <span class="pill">Notion</span>
+          <span class="pill">Figma</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-label">Development & Tech</div>
+        <div class="skill-pills">
+          <span class="pill core">React JS</span>
+          <span class="pill core">Node.js</span>
+          <span class="pill">Python</span>
+          <span class="pill">Docker</span>
+          <span class="pill">MySQL</span>
+          <span class="pill">MongoDB</span>
+          <span class="pill">HTML5</span>
+          <span class="pill">Tailwind CSS</span>
+          <span class="pill">GitHub</span>
+        </div>
+      </div>
+      <div class="skill-category">
+        <div class="skill-cat-label">SEO & Analytics</div>
+        <div class="skill-pills">
+          <span class="pill core">SEMrush</span>
+          <span class="pill core">Moz</span>
+          <span class="pill">Ahrefs</span>
+          <span class="pill">Agile Metrics</span>
+          <span class="pill">Data Analysis</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- EXPERIENCE -->
+<!-- ══════════════ EXPERIENCE ══════════════ -->
 <section id="experience">
-  <div class="exp-header reveal">
-    <div class="section-label">Experience</div>
-    <h2 class="section-title">Where I've built,<br>coached &amp; delivered.</h2>
-  </div>
+  <div class="sec-label">// experience</div>
+  <h2 class="sec-heading">Where I've<br><span class="dim">coached & delivered.</span></h2>
+
   <div class="exp-timeline">
 
-    <div class="exp-item reveal">
+    <div class="exp-item">
       <div class="exp-meta">
-        <div class="exp-dates">03/2025 — Present</div>
-        <div class="exp-company">CARIAD</div>
-        <div class="exp-location">Volkswagen Group · Berlin</div>
+        <div class="exp-period">Mar 2025 - Present</div>
+        <div class="exp-company">CARIAD (Volkswagen)</div>
+        <div class="exp-loc">Berlin, Germany</div>
       </div>
       <div class="exp-content">
-        <div class="exp-role">Scrum Master &amp; Agile Coach</div>
-        <div class="exp-highlight">
-          <span class="exp-highlight-item">20–30% delivery predictability</span>
-          <span class="exp-highlight-item">90%+ sprint goals met</span>
-          <span class="exp-highlight-item">SAFe ART-level impact</span>
-        </div>
-        <p class="exp-desc">
-          Leading Agile delivery across 3 cross-functional teams (ID, Consent, ARCreator) within a SAFe environment. Contributing to LACE, driving PI Planning, and collaborating with RTEs and Solution Engineers for ART-level synchronization.
-        </p>
-        <div class="exp-tags">
-          <span class="exp-tag">SAFe 6.0</span>
-          <span class="exp-tag">PI Planning</span>
-          <span class="exp-tag">Scrum of Scrums</span>
-          <span class="exp-tag">Jira</span>
-          <span class="exp-tag">Confluence</span>
-          <span class="exp-tag">Miro</span>
+        <div class="exp-role">Scrum Master & Agile Coach</div>
+        <ul class="exp-bullets">
+          <li>Lead Agile delivery across <strong>3 cross-functional teams</strong> (ID, Consent, ARCreator) in a SAFe environment, improving delivery predictability by <span class="metric">20–30%</span>.</li>
+          <li>Facilitate all Scrum ceremonies with <span class="metric">90%+</span> sprint goal achievement rate consistently across all teams.</li>
+          <li>Contribute to <strong>LACE</strong> and support SAFe ceremonies: PI Planning, Scrum of Scrums, System Demos, and Inspect & Adapt workshops.</li>
+          <li>Drive adoption of Agile metrics (velocity, flow metrics, team health) enabling data-driven decision-making at ART level.</li>
+        </ul>
+        <div class="exp-stack">
+          <span class="tag">SAFe 6.0</span><span class="tag">PI Planning</span><span class="tag">Scrum</span><span class="tag">Jira</span><span class="tag">Confluence</span><span class="tag">Miro</span><span class="tag">Agile Metrics</span>
         </div>
       </div>
     </div>
 
-    <div class="exp-item reveal">
+    <div class="exp-item">
       <div class="exp-meta">
-        <div class="exp-dates">06/2024 — 01/2025</div>
-        <div class="exp-company">Get Here IT</div>
-        <div class="exp-location">Remote</div>
+        <div class="exp-period">Jun 2024 - Jan 2025</div>
+        <div class="exp-company">Get Here IT Services</div>
+        <div class="exp-loc">Remote</div>
       </div>
       <div class="exp-content">
         <div class="exp-role">Agile IT Project Manager / Product Owner</div>
-        <div class="exp-highlight">
-          <span class="exp-highlight-item">30–50% productivity boost</span>
-          <span class="exp-highlight-item">40% fewer escalations</span>
-        </div>
-        <p class="exp-desc">
-          Led end-to-end IT project delivery as Project Manager and Product Owner. Implemented Scrum/Kanban frameworks, managed stakeholder alignment, and established continuous improvement cycles that consistently hit delivery targets.
-        </p>
-        <div class="exp-tags">
-          <span class="exp-tag">Scrum</span>
-          <span class="exp-tag">Kanban</span>
-          <span class="exp-tag">Product Ownership</span>
-          <span class="exp-tag">Risk Management</span>
-          <span class="exp-tag">Monday.com</span>
+        <ul class="exp-bullets">
+          <li>Scaled Scrum/Kanban frameworks across teams resulting in a <span class="metric">30–50%</span> increase in team productivity and delivery speed.</li>
+          <li>Achieved consistent on-time delivery in over <span class="metric">90%</span> of sprints; reduced blockers and escalations by <span class="metric">~40%</span> through coaching and mentoring.</li>
+          <li>Acted as primary liaison between stakeholders and development teams, maintaining high satisfaction and full alignment with business goals.</li>
+        </ul>
+        <div class="exp-stack">
+          <span class="tag">Scrum</span><span class="tag">Kanban</span><span class="tag">Product Ownership</span><span class="tag">Risk Management</span><span class="tag">Monday.com</span><span class="tag">Slack</span>
         </div>
       </div>
     </div>
 
-    <div class="exp-item reveal">
+    <div class="exp-item">
       <div class="exp-meta">
-        <div class="exp-dates">01/2024 — 06/2024</div>
-        <div class="exp-company">HOT Microfluidics</div>
-        <div class="exp-location">Goslar, Germany</div>
+        <div class="exp-period">Jan 2024 - Jun 2024</div>
+        <div class="exp-company">HOT Microfluidics GmbH</div>
+        <div class="exp-loc">Goslar, Germany</div>
       </div>
       <div class="exp-content">
         <div class="exp-role">Agile Project Management Assistant</div>
-        <div class="exp-highlight">
-          <span class="exp-highlight-item">50% productivity improvement</span>
-        </div>
-        <p class="exp-desc">
-          Drove org-wide Agile implementation from scratch. Led the tool migration from Monday.com to Jira, trained teams on Scrum, and contributed to SEO strategy using Moz and SEMrush.
-        </p>
-        <div class="exp-tags">
-          <span class="exp-tag">Scrum</span>
-          <span class="exp-tag">Jira Migration</span>
-          <span class="exp-tag">Training</span>
-          <span class="exp-tag">SEMrush</span>
-          <span class="exp-tag">Moz</span>
+        <ul class="exp-bullets">
+          <li>Drove org-wide Agile implementation from zero, boosting team productivity by up to <span class="metric">50%</span> through iterative delivery practices.</li>
+          <li>Led full tool migration from <strong>Monday.com → Jira</strong>, streamlining project tracking and reducing overhead across teams.</li>
+          <li>Conducted training workshops on Agile best practices; supported Product Owner in backlog refinement and prioritization.</li>
+          <li>Contributed to strategic growth via SEO analysis using <strong>Moz</strong> and <strong>SEMrush</strong>.</li>
+        </ul>
+        <div class="exp-stack">
+          <span class="tag">Scrum</span><span class="tag">Jira</span><span class="tag">Monday.com</span><span class="tag">Agile Training</span><span class="tag">SEMrush</span><span class="tag">Moz</span>
         </div>
       </div>
     </div>
 
-    <div class="exp-item reveal">
+    <div class="exp-item">
       <div class="exp-meta">
-        <div class="exp-dates">03/2022 — 11/2023</div>
+        <div class="exp-period">Mar 2022 - Nov 2023</div>
         <div class="exp-company">Nicolas Welitzki IT</div>
-        <div class="exp-location">Berlin, Germany</div>
+        <div class="exp-loc">Berlin, Germany</div>
       </div>
       <div class="exp-content">
         <div class="exp-role">Agile Full Stack Developer</div>
-        <p class="exp-desc">
-          Full-stack development in an Agile environment: React, Node.js, Express, MySQL. API development &amp; testing, TDD practices, Docker deployments, SEO optimization, and WordPress builds. Active Scrum participant across all ceremonies.
-        </p>
-        <div class="exp-tags">
-          <span class="exp-tag">React JS</span>
-          <span class="exp-tag">Node JS</span>
-          <span class="exp-tag">MySQL</span>
-          <span class="exp-tag">Docker</span>
-          <span class="exp-tag">TDD</span>
-          <span class="exp-tag">WordPress</span>
+        <ul class="exp-bullets">
+          <li>Built production web applications with <strong>React, Node.js, Express, and MySQL</strong> in an Agile team environment across all ceremonies.</li>
+          <li>Enforced high code quality through <strong>TDD</strong> (unit + acceptance testing); containerized deployments using Docker for consistency.</li>
+          <li>Delivered SEO-optimized WordPress builds with Oxygen, Elementor, and WooCommerce; API development & testing via Postman.</li>
+        </ul>
+        <div class="exp-stack">
+          <span class="tag">React JS</span><span class="tag">Node JS</span><span class="tag">Express</span><span class="tag">MySQL</span><span class="tag">Docker</span><span class="tag">TDD</span><span class="tag">WordPress</span><span class="tag">GitHub</span>
         </div>
       </div>
     </div>
 
-    <div class="exp-item reveal">
+    <div class="exp-item">
       <div class="exp-meta">
-        <div class="exp-dates">09/2020 — 02/2021</div>
+        <div class="exp-period">Sep 2020 - Feb 2021</div>
         <div class="exp-company">LB TechHub</div>
-        <div class="exp-location">Surat, India</div>
+        <div class="exp-loc">Surat, India</div>
       </div>
       <div class="exp-content">
         <div class="exp-role">QA Engineer Intern</div>
-        <p class="exp-desc">Manual testing, unit testing, and Agile ceremonies participation inside a product development team. Built core QA discipline and Agile fundamentals from the ground up.</p>
-        <div class="exp-tags">
-          <span class="exp-tag">Manual Testing</span>
-          <span class="exp-tag">Unit Testing</span>
-          <span class="exp-tag">Agile</span>
+        <ul class="exp-bullets">
+          <li>Performed comprehensive manual and unit testing of software products, identifying defects to enhance overall quality.</li>
+          <li>Operated within an Agile framework - actively contributed to Daily Scrums, Sprint Planning, Reviews, and Retrospectives.</li>
+        </ul>
+        <div class="exp-stack">
+          <span class="tag">Manual Testing</span><span class="tag">Unit Testing</span><span class="tag">Agile</span><span class="tag">QA</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-item">
+      <div class="exp-meta">
+        <div class="exp-period">Mar 2020 - Aug 2020</div>
+        <div class="exp-company">LB TechHub</div>
+        <div class="exp-loc">Surat, India</div>
+      </div>
+      <div class="exp-content">
+        <div class="exp-role">Android Development Intern</div>
+        <ul class="exp-bullets">
+          <li>Developed Android applications using <strong>Android Studio & Java</strong>; designed wireframes and prototypes with Figma and Adobe XD.</li>
+          <li>Designed and tested APIs using Postman; participated in full Agile Scrum workflow throughout the internship.</li>
+        </ul>
+        <div class="exp-stack">
+          <span class="tag">Android Studio</span><span class="tag">Java</span><span class="tag">Figma</span><span class="tag">Adobe XD</span><span class="tag">Postman</span>
         </div>
       </div>
     </div>
@@ -875,289 +940,201 @@ footer a:hover { color: var(--accent); }
   </div>
 </section>
 
-<!-- SKILLS -->
-<section id="skills">
-  <div class="skills-header reveal">
-    <div class="section-label">Skills</div>
-    <h2 class="section-title">Tools of the trade.</h2>
-    <p class="section-sub">A rare mix of Agile leadership and technical depth — letting me coach with credibility and build with intent.</p>
-  </div>
-  <div class="skills-layout">
-
-    <div class="skill-group reveal">
-      <div class="skill-group-bg">Agile</div>
-      <div class="skill-group-title">Agile &amp; Frameworks</div>
-      <div class="skill-list">
-        <div class="skill-row"><span class="skill-name">Scrum</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">SAFe 6.0</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Kanban</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">PI Planning</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Agile Coaching</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:92%"></div></div></div>
-      </div>
-    </div>
-
-    <div class="skill-group reveal">
-      <div class="skill-group-bg">Tools</div>
-      <div class="skill-group-title">Tools &amp; Platforms</div>
-      <div class="skill-list">
-        <div class="skill-row"><span class="skill-name">Jira</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:95%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Confluence</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Miro</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Monday.com</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">MS Dynamics 365</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:78%"></div></div></div>
-      </div>
-    </div>
-
-    <div class="skill-group reveal">
-      <div class="skill-group-bg">Dev</div>
-      <div class="skill-group-title">Development</div>
-      <div class="skill-list">
-        <div class="skill-row"><span class="skill-name">React JS</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:82%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Node / Express</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Python</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:72%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">MySQL / MongoDB</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:78%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Docker</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:70%"></div></div></div>
-      </div>
-    </div>
-
-    <div class="skill-group reveal">
-      <div class="skill-group-bg">PM</div>
-      <div class="skill-group-title">Project Management</div>
-      <div class="skill-list">
-        <div class="skill-row"><span class="skill-name">Stakeholder Mgmt</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:94%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Risk Management</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:88%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Backlog Refinement</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:92%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Change Management</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Agile Metrics</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:90%"></div></div></div>
-      </div>
-    </div>
-
-    <div class="skill-group reveal">
-      <div class="skill-group-bg">SEO</div>
-      <div class="skill-group-title">SEO &amp; Analytics</div>
-      <div class="skill-list">
-        <div class="skill-row"><span class="skill-name">SEMrush</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Moz</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:78%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Ahrefs</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:72%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Data Analysis</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:82%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Playwright</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:65%"></div></div></div>
-      </div>
-    </div>
-
-    <div class="skill-group reveal">
-      <div class="skill-group-bg">QA</div>
-      <div class="skill-group-title">Testing &amp; Quality</div>
-      <div class="skill-list">
-        <div class="skill-row"><span class="skill-name">Test-Driven Dev</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:78%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Unit Testing</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:80%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Manual QA</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:85%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Acceptance Testing</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:76%"></div></div></div>
-        <div class="skill-row"><span class="skill-name">Postman</span><div class="skill-bar-wrap"><div class="skill-bar" style="width:82%"></div></div></div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<!-- PROJECTS / HIGHLIGHTS -->
+<!-- ══════════════ HIGHLIGHTS ══════════════ -->
 <section id="projects">
-  <div class="projects-header reveal">
-    <div class="section-label">Highlights</div>
-    <h2 class="section-title">Impact that speaks<br>for itself.</h2>
-    <p class="section-sub">Key initiatives and outcomes across my career in Agile delivery and software development.</p>
-  </div>
+  <div class="sec-label">// key highlights</div>
+  <h2 class="sec-heading">Impact that<br><span class="dim">speaks for itself.</span></h2>
+
   <div class="projects-grid">
 
-    <div class="proj-card reveal" onmousemove="trackMouse(event, this)">
-      <div class="proj-num">01</div>
-      <div class="proj-category">SAFe · CARIAD / Volkswagen</div>
-      <div class="proj-name">ART-Level Agile Transformation</div>
-      <p class="proj-desc">Scaled Agile practices across 3 cross-functional teams at CARIAD, supporting PI Planning, Scrum of Scrums, and System Demos. Contributed to LACE and org-wide SAFe maturity.</p>
-      <div class="proj-tech">
-        <span>SAFe 6.0</span><span>PI Planning</span><span>Jira</span><span>Confluence</span>
+    <div class="proj-card featured">
+      <div class="proj-domain">SAFe · CARIAD / Volkswagen Group</div>
+      <div class="proj-title">ART-Level Agile Transformation at Scale</div>
+      <div class="proj-desc">
+        Scaled Agile practices across <strong>3 cross-functional teams</strong> at one of Europe's largest automotive tech organizations. Led PI Planning, Scrum of Scrums, and System Demos. Contributed to LACE and drove org-wide SAFe maturity. Delivery predictability improved by <strong>20–30%</strong> with <strong>90%+</strong> sprint goal achievement.
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">SAFe 6.0</span>
+        <span class="proj-tag">PI Planning</span>
+        <span class="proj-tag">LACE</span>
+        <span class="proj-tag">Jira</span>
+        <span class="proj-tag">Confluence</span>
+        <span class="proj-tag">Miro</span>
       </div>
     </div>
 
-    <div class="proj-card reveal" onmousemove="trackMouse(event, this)">
-      <div class="proj-num">02</div>
-      <div class="proj-category">Agile PM · Get Here IT</div>
-      <div class="proj-name">IT Project Delivery at Scale</div>
-      <p class="proj-desc">Led end-to-end delivery as PM + Product Owner, achieving 30–50% productivity improvements and 90%+ on-time sprint delivery across distributed teams.</p>
-      <div class="proj-tech">
-        <span>Scrum</span><span>Kanban</span><span>Product Ownership</span><span>Risk Mgmt</span>
+    <div class="proj-card">
+      <div class="proj-domain">Agile PM · Get Here IT</div>
+      <div class="proj-title">IT Project Delivery as PM + PO</div>
+      <div class="proj-desc">
+        Led end-to-end delivery across distributed teams as both Project Manager and Product Owner. Achieved <strong>30–50% productivity boost</strong>, <strong>90%+</strong> on-time sprint delivery, and reduced escalations by <strong>40%</strong>.
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">Scrum</span>
+        <span class="proj-tag">Kanban</span>
+        <span class="proj-tag">Product Ownership</span>
+        <span class="proj-tag">Risk Mgmt</span>
       </div>
     </div>
 
-    <div class="proj-card reveal" onmousemove="trackMouse(event, this)">
-      <div class="proj-num">03</div>
-      <div class="proj-category">Agile Transformation · HOT Microfluidics</div>
-      <div class="proj-name">Zero-to-Agile Implementation</div>
-      <p class="proj-desc">Built Agile from scratch at a GmbH: introduced Scrum, led a full Monday.com→Jira migration, trained the entire org, and achieved 50% productivity uplift within 6 months.</p>
-      <div class="proj-tech">
-        <span>Scrum</span><span>Jira</span><span>Training</span><span>SEMrush</span><span>Moz</span>
+    <div class="proj-card">
+      <div class="proj-domain">Agile Transformation · HOT Microfluidics</div>
+      <div class="proj-title">Zero-to-Agile in 6 Months</div>
+      <div class="proj-desc">
+        Built Agile from scratch at a GmbH - introduced Scrum, led full <strong>Monday.com → Jira migration</strong>, trained the whole org, and delivered <strong>50% productivity uplift</strong> within 6 months.
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">Scrum</span>
+        <span class="proj-tag">Jira Migration</span>
+        <span class="proj-tag">Agile Training</span>
+        <span class="proj-tag">SEMrush</span>
       </div>
     </div>
 
-    <div class="proj-card reveal" onmousemove="trackMouse(event, this)">
-      <div class="proj-num">04</div>
-      <div class="proj-category">Full Stack · Nicolas Welitzki IT</div>
-      <div class="proj-name">Production Web Applications</div>
-      <p class="proj-desc">Delivered end-to-end web apps in an Agile team — React frontends, Node/Express backends, MySQL databases, Docker deployments, and SEO-optimized WordPress builds.</p>
-      <div class="proj-tech">
-        <span>React</span><span>Node.js</span><span>Docker</span><span>MySQL</span><span>TDD</span>
+    <div class="proj-card">
+      <div class="proj-domain">Full Stack · Nicolas Welitzki IT</div>
+      <div class="proj-title">Production Web Applications</div>
+      <div class="proj-desc">
+        Delivered full-stack web apps end-to-end - React frontends, Node/Express backends, MySQL databases, Docker deployments, TDD, and SEO-optimized WordPress builds for client-facing products.
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">React</span>
+        <span class="proj-tag">Node.js</span>
+        <span class="proj-tag">Docker</span>
+        <span class="proj-tag">MySQL</span>
+        <span class="proj-tag">TDD</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-domain">Education · TU Clausthal</div>
+      <div class="proj-title">M.Sc. Computer Science</div>
+      <div class="proj-desc">
+        Master's degree in Computer Science from <strong>Technische Universität Clausthal</strong>, Germany (2021–2025), combining academic depth with professional Agile and software engineering practice.
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">Computer Science</span>
+        <span class="proj-tag">Software Engineering</span>
+        <span class="proj-tag">Germany</span>
+      </div>
+    </div>
+
+    <div class="proj-card">
+      <div class="proj-domain">Languages · Communication</div>
+      <div class="proj-title">Multilingual Professional</div>
+      <div class="proj-desc">
+        Operates effectively across international teams - <strong>English (C1)</strong>, <strong>German (B1)</strong>, Hindi (Native), Gujarati (Mother Tongue). Essential for cross-cultural stakeholder management in Berlin's global tech scene.
+      </div>
+      <div class="proj-tags">
+        <span class="proj-tag">English C1</span>
+        <span class="proj-tag">German B1</span>
+        <span class="proj-tag">Hindi</span>
+        <span class="proj-tag">Gujarati</span>
       </div>
     </div>
 
   </div>
 </section>
 
-<!-- CERTIFICATIONS -->
+<!-- ══════════════ CERTIFICATIONS ══════════════ -->
 <section id="certifications">
-  <div class="certs-header reveal">
-    <div class="section-label">Certifications</div>
-    <h2 class="section-title">Credentials that<br>back the work.</h2>
-  </div>
+  <div class="sec-label">// certifications</div>
+  <h2 class="sec-heading">Credentials that<br><span class="dim">back the work.</span></h2>
+
   <div class="certs-grid">
-    <div class="cert-card reveal">
+    <div class="cert-card">
       <div class="cert-issuer">Scrum.org</div>
       <div class="cert-name">Professional Scrum Master™ I (PSM I)</div>
     </div>
-    <div class="cert-card reveal">
+    <div class="cert-card">
       <div class="cert-issuer">Udemy</div>
-      <div class="cert-name">SAFe® 6.0 Scaled Agile Framework In-Depth</div>
+      <div class="cert-name">SAFe® 6.0 - Scaled Agile Framework In-Depth</div>
     </div>
-    <div class="cert-card reveal">
+    <div class="cert-card">
       <div class="cert-issuer">Atlassian</div>
       <div class="cert-name">Agile Project Management Professional Certificate</div>
     </div>
-    <div class="cert-card reveal">
+    <div class="cert-card">
       <div class="cert-issuer">PMI® Registered</div>
       <div class="cert-name">Agile Foundations</div>
     </div>
-    <div class="cert-card reveal">
+    <div class="cert-card">
       <div class="cert-issuer">PMI® Registered</div>
       <div class="cert-name">Scrum: Advanced</div>
     </div>
-    <div class="cert-card reveal">
+    <div class="cert-card">
       <div class="cert-issuer">PMI® Registered</div>
       <div class="cert-name">Becoming an Agile Coach</div>
     </div>
-    <div class="cert-card reveal">
+    <div class="cert-card">
       <div class="cert-issuer">LinkedIn Learning</div>
       <div class="cert-name">Become an Agile Project Manager</div>
     </div>
-    <div class="cert-card reveal">
+    <div class="cert-card">
       <div class="cert-issuer">LinkedIn</div>
       <div class="cert-name">Project Management with Monday.com</div>
     </div>
-    <div class="cert-card reveal">
+    <div class="cert-card">
       <div class="cert-issuer">Foundations</div>
       <div class="cert-name">Programming Foundations: Software Testing / QA</div>
     </div>
   </div>
 </section>
 
-<!-- EDUCATION -->
-<section id="education">
-  <div class="reveal">
-    <div class="section-label">Education</div>
-    <h2 class="section-title">Academic<br>foundations.</h2>
-    <div class="edu-list">
-      <div class="edu-item reveal">
-        <div class="edu-year">2021–2025</div>
-        <div>
-          <div class="edu-degree">M.Sc. Computer Science</div>
-          <div class="edu-uni">Technische Universität Clausthal<br>Clausthal-Zellerfeld, Germany</div>
-        </div>
-      </div>
-      <div class="edu-item reveal">
-        <div class="edu-year">2016–2019</div>
-        <div>
-          <div class="edu-degree">B.Eng. Information &amp; Technology</div>
-          <div class="edu-uni">Gujarat Technological University<br>Gujarat, India</div>
-        </div>
-      </div>
-      <div class="edu-item reveal">
-        <div class="edu-year">2013–2016</div>
-        <div>
-          <div class="edu-degree">Diploma — IT Engineering</div>
-          <div class="edu-uni">Gujarat Technological University<br>Gujarat, India</div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="reveal">
-    <div class="section-label">Languages</div>
-    <div class="lang-title">Communicating<br>across borders.</div>
-    <div class="lang-list">
-      <div class="lang-item">
-        <span class="lang-name">English</span>
-        <span class="lang-level">C1 · Professional</span>
-      </div>
-      <div class="lang-item">
-        <span class="lang-name">German</span>
-        <span class="lang-level">B1 · Intermediate</span>
-      </div>
-      <div class="lang-item">
-        <span class="lang-name">Hindi</span>
-        <span class="lang-level">Native</span>
-      </div>
-      <div class="lang-item">
-        <span class="lang-name">Gujarati</span>
-        <span class="lang-level">Mother Tongue</span>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
+<!-- ══════════════ CONTACT ══════════════ -->
 <section id="contact">
-  <div class="reveal">
-    <div class="section-label" style="justify-content:center; margin-bottom:28px;">Let's Connect</div>
-    <p class="contact-tagline">Open to exciting<br><em>Agile &amp; dev opportunities.</em></p>
-    <p class="contact-sub">Based in Berlin · Available for Scrum Master, Agile Coach, and PM roles</p>
+  <div class="contact-inner">
+    <div class="sec-label">// contact</div>
+    <h2 class="sec-heading">Let's build<br><span class="dim">something great.</span></h2>
+    <p class="contact-sub">
+      Open to Scrum Master, Agile Coach, and PM roles in Berlin and remote. Available for full-time positions and consulting engagements. I respond within 24 hours.
+    </p>
     <div class="contact-links">
       <a href="mailto:payalkaklotar006@gmail.com" class="contact-link">
-        <span>✉</span> Email Me
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        payalkaklotar006@gmail.com
       </a>
-      <a href="https://www.linkedin.com/in/payal-kaklotar-685979140" target="_blank" class="contact-link">
-        <span>in</span> LinkedIn
+      <a href="https://www.linkedin.com/in/payal-kaklotar-685979140/" class="contact-link" target="_blank">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+        LinkedIn
       </a>
       <a href="tel:+4917648093684" class="contact-link">
-        <span>☎</span> Call Me
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.05 6C15.0268 6.19057 15.9244 6.66826 16.6281 7.37194C17.3318 8.07561 17.8095 8.97326 18 9.95M14.05 2C16.0793 2.22544 17.9716 3.13417 19.4163 4.57701C20.8609 6.01984 21.7721 7.91101 22 9.94M18.5 21C9.93959 21 3 14.0604 3 5.5C3 5.11378 3.01413 4.73086 3.04189 4.35173C3.07375 3.91662 3.08968 3.69907 3.2037 3.50103C3.29814 3.33701 3.4655 3.18146 3.63598 3.09925C3.84181 3 4.08188 3 4.56201 3H7.37932C7.78308 3 7.98496 3 8.15802 3.06645C8.31089 3.12515 8.44701 3.22049 8.55442 3.3441C8.67601 3.48403 8.745 3.67376 8.88299 4.05321L10.0491 7.26005C10.2096 7.70153 10.2899 7.92227 10.2763 8.1317C10.2643 8.31637 10.2012 8.49408 10.0942 8.64506C9.97286 8.81628 9.77145 8.93713 9.36863 9.17882L8 10C9.2019 12.6489 11.3501 14.7999 14 16L14.8212 14.6314C15.0629 14.2285 15.1837 14.0271 15.3549 13.9058C15.5059 13.7988 15.6836 13.7357 15.8683 13.7237C16.0777 13.7101 16.2985 13.7904 16.74 13.9509L19.9468 15.117C20.3262 15.255 20.516 15.324 20.6559 15.4456C20.7795 15.553 20.8749 15.6891 20.9335 15.842C21 16.015 21 16.2169 21 16.6207V19.438C21 19.9181 21 20.1582 20.9007 20.364C20.8185 20.5345 20.663 20.7019 20.499 20.7963C20.3009 20.9103 20.0834 20.9262 19.6483 20.9581C19.2691 20.9859 18.8862 21 18.5 21Z"/></svg>
+        +49 17648093684
       </a>
     </div>
-    <div class="contact-email"><a href="mailto:payalkaklotar006@gmail.com">payalkaklotar006@gmail.com</a></div>
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ══════════════ FOOTER ══════════════ -->
 <footer>
-  <span>© 2025 Payal Kaklotar · Berlin, Germany</span>
-  <span>PSM I Certified · Agile Coach · Full Stack Developer</span>
+  <span>© 2025 Payal Kaklotar</span>
+  <span>Berlin, Germany</span>
+  <span>PSM I · SAFe · Full Stack</span>
 </footer>
 
+<!-- ══════════════ JS ══════════════ -->
 <script>
 // Custom cursor
 const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
+const ring   = document.getElementById('cursorRing');
 let mx = 0, my = 0, rx = 0, ry = 0;
 
 document.addEventListener('mousemove', e => {
   mx = e.clientX; my = e.clientY;
   cursor.style.left = mx + 'px';
-  cursor.style.top = my + 'px';
+  cursor.style.top  = my + 'px';
 });
-function animateRing() {
+
+(function animRing() {
   rx += (mx - rx) * 0.12;
   ry += (my - ry) * 0.12;
   ring.style.left = rx + 'px';
-  ring.style.top = ry + 'px';
-  requestAnimationFrame(animateRing);
-}
-animateRing();
+  ring.style.top  = ry + 'px';
+  requestAnimationFrame(animRing);
+})();
 
-document.querySelectorAll('a, button, .about-card, .proj-card, .cert-card, .skill-group').forEach(el => {
+document.querySelectorAll('a, button, .proj-card, .cert-card, .pill').forEach(el => {
   el.addEventListener('mouseenter', () => { cursor.classList.add('hovered'); ring.classList.add('hovered'); });
   el.addEventListener('mouseleave', () => { cursor.classList.remove('hovered'); ring.classList.remove('hovered'); });
 });
@@ -1165,40 +1142,47 @@ document.querySelectorAll('a, button, .about-card, .proj-card, .cert-card, .skil
 // Nav scroll
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
-  nav.classList.toggle('scrolled', window.scrollY > 40);
+  nav.classList.toggle('scrolled', window.scrollY > 60);
 });
 
-// Scroll reveal
-const revealEls = document.querySelectorAll('.reveal');
-const revealObs = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      entry.target.style.transitionDelay = (i % 3) * 0.1 + 's';
-      entry.target.classList.add('visible');
-      revealObs.unobserve(entry.target);
+// Intersection Observer for scroll reveals
+const io = new IntersectionObserver((entries) => {
+  entries.forEach((e) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), e.target.dataset.delay || 0);
+      io.unobserve(e.target);
     }
   });
 }, { threshold: 0.12 });
-revealEls.forEach(el => revealObs.observe(el));
 
-// Skill bars on scroll
-const skillGroups = document.querySelectorAll('.skill-group');
-const skillObs = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      skillObs.unobserve(entry.target);
+document.querySelectorAll('.exp-item').forEach((el, i) => {
+  el.dataset.delay = i * 120;
+  io.observe(el);
+});
+document.querySelectorAll('.proj-card').forEach((el, i) => {
+  el.dataset.delay = i * 80;
+  io.observe(el);
+});
+
+// Mouse radial gradient on project cards
+document.querySelectorAll('.proj-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+    card.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+  });
+});
+
+// Smooth scroll for nav links
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: 'smooth' });
     }
   });
-}, { threshold: 0.3 });
-skillGroups.forEach(g => skillObs.observe(g));
-
-// Mouse gradient on project cards
-function trackMouse(e, el) {
-  const rect = el.getBoundingClientRect();
-  el.style.setProperty('--mx', ((e.clientX - rect.left) / rect.width * 100) + '%');
-  el.style.setProperty('--my', ((e.clientY - rect.top) / rect.height * 100) + '%');
-}
+});
 </script>
 </body>
 </html>
